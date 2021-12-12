@@ -16,20 +16,23 @@
 // app.listen(5001, () => {
 //   console.log("http로 가동된 서버입니다.");
 // });
-
+"use Strict";
+// 모듈
 const express = require("express");
 const app = express();
+
+const POST = 5000;
+
+// 라우팅
+const home = require("./routes/home");
 
 // 앱 세팅
 app.set("views", "./views");
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-  res.render("home/index");
-});
-app.get("/login", (req, res) => {
-  res.render("home/login");
-});
-app.listen(5000, () => {
+app.use("/", home);
+// use: 미들웨어 등록하는 메서드
+
+app.listen(POST, () => {
   console.log("서버가동");
 });
