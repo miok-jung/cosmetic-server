@@ -21,8 +21,6 @@
 const express = require("express");
 const app = express();
 
-const POST = 5000;
-
 // 라우팅
 const home = require("./routes/home");
 
@@ -33,6 +31,4 @@ app.set("view engine", "ejs");
 app.use("/", home);
 // use: 미들웨어 등록하는 메서드
 
-app.listen(POST, () => {
-  console.log("서버가동");
-});
+module.exports = app;
