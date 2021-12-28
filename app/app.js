@@ -16,7 +16,7 @@
 // app.listen(5001, () => {
 //   console.log("http로 가동된 서버입니다.");
 // });
-"use Strict";
+"use strict";
 // 모듈
 const express = require("express");
 const app = express();
@@ -27,6 +27,8 @@ const home = require("./src/routes/home");
 // 앱 세팅
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
+// 정적 경로 추가
+app.use(express.static(`${__dirname}/src/public`));
 
 app.use("/", home);
 // use: 미들웨어 등록하는 메서드
