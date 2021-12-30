@@ -23,5 +23,11 @@ function login() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(req),
-  });
+  })
+    // 여기까지 적은 경우 Promise로 들어옴
+    // 따라서 한번더 then으로 접근을 해야한다.
+    .then((res) => res.json())
+    .then((res) => {
+      console.log("res", res);
+    });
 }
