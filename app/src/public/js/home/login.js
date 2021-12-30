@@ -28,6 +28,13 @@ function login() {
     // 따라서 한번더 then으로 접근을 해야한다.
     .then((res) => res.json())
     .then((res) => {
-      console.log("res", res);
+      if (res.success) {
+        location.href = "/";
+      } else {
+        alert(res.msg);
+      }
+    })
+    .catch((err) => {
+      console.error(new Error("로그인 중 에러 발생"));
     });
 }
