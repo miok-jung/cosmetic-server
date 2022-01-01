@@ -15,8 +15,6 @@ function login() {
     id: id.value,
     password: password.value,
   };
-  console.log("req1", req);
-  console.log("req2", JSON.stringify(req));
   fetch("/login", {
     method: "POST",
     headers: {
