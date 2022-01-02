@@ -1,0 +1,27 @@
+// 로그인 & 회원가입하는 모델
+"use strict";
+
+const UserStorage = require("./UserStorage");
+
+class User {
+  // 1. 생성자 만들기
+  constructor(body) {
+    this.body = body;
+  }
+  login() {
+    const body = this.body;
+    const { id, password } = UserStorage.getUserInfo(body.id);
+    if (id) {
+      // 아이디가 있는지 먼저 확인
+      if (id === body.id && password === body.password) {
+        // UserStorage에 저장된 값과 입력한 아이디/비번이 같은지 확인
+        return { success: true };
+      }
+      return { success: false, msg: "비밀번호가 틀렸습니다." };
+    }
+    // 존재하지 않는 아이디가 있을 때
+    return { success: false, msg: "존재하지 않는 아이디입니다." };
+  }
+}
+
+module.exports = User;
