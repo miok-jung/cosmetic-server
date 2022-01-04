@@ -9,11 +9,11 @@ class User {
     this.body = body;
   }
   login() {
-    const body = this.body;
-    const { id, password } = UserStorage.getUserInfo(body.id);
+    const client = this.body;
+    const { id, password } = UserStorage.getUserInfo(client.id);
     if (id) {
       // 아이디가 있는지 먼저 확인
-      if (id === body.id && password === body.password) {
+      if (id === client.id && password === client.password) {
         // UserStorage에 저장된 값과 입력한 아이디/비번이 같은지 확인
         return { success: true };
       }
@@ -21,6 +21,11 @@ class User {
     }
     // 존재하지 않는 아이디가 있을 때
     return { success: false, msg: "존재하지 않는 아이디입니다." };
+  }
+  register() {
+    const client = this.body;
+    const response = UserStorage.save(client);
+    return response;
   }
 }
 
