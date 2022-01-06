@@ -21,8 +21,9 @@ class UserStorage {
     return userInfo;
   }
 
-  static getUsers(...fields) {
-    // const users = this.#users;
+  static #getUsers(data, isAll, fields) {
+    const users = JSON.parse(data);
+    if (isAll) return users;
     const newUsers = fields.reduce((newUsers, field) => {
       if (users.hasOwnProperty(field)) {
         newUsers[field] = users[field];
@@ -31,22 +32,36 @@ class UserStorage {
     }, {});
     return newUsers;
   }
+  static getUsers(isAll, ...fields) {
+    return fs
+      .readFile("./src/databases/users.json")
+      .then((data) => {
+        return this.#getUsers(data, isAll, fields);
+      })
+      .catch(console.error);
+  }
   static getUserInfo(id) {
     return fs
       .readFile("./src/databases/users.json")
       .then((data) => {
-        return this.#getUserInfo(data, id);
+        return this.#getUserInfo(data, isAll, id);
       })
       .catch(console.error);
     // 함수를 실행시키는데 파라미터로 넘어온 변수를 실행시키는 함수로 똑같이 실행시킬때 생략이 가능하다.
     // .catch(err => console.error(err))
   }
 
-  static save(userInfo) {
-    // const users = this.#users;
+  static async save(userInfo) {
+    const users = await this.getUsers(true);
+    // 모든 데이터 받아오기 : this.getUsers("id", "password", "name") 보단, this.getUsers(true)로 하면 한번에 받아 올 수 있다.
+    if (users.id.includes(userInfo.id)) {
+      throw "이미 존재하는 아이디입니다.";
+    }
     users.id.push(userInfo.id);
     users.name.push(userInfo.name);
     users.password.push(userInfo.password);
+    // 데이터 추가
+    fs.writeFile("./src/databases/users.json", JSON.stringify(users));
     return { success: true };
   }
 }

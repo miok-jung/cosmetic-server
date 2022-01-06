@@ -22,10 +22,14 @@ class User {
     // 존재하지 않는 아이디가 있을 때
     return { success: false, msg: "존재하지 않는 아이디입니다." };
   }
-  register() {
+  async register() {
     const client = this.body;
-    const response = UserStorage.save(client);
-    return response;
+    try {
+      const response = await UserStorage.save(client);
+      return response;
+    } catch (err) {
+      return { success: false, msg: err };
+    }
   }
 }
 
