@@ -44,7 +44,7 @@ class UserStorage {
     return fs
       .readFile("./src/databases/users.json")
       .then((data) => {
-        return this.#getUserInfo(data, isAll, id);
+        return this.#getUserInfo(data, id);
       })
       .catch(console.error);
     // 함수를 실행시키는데 파라미터로 넘어온 변수를 실행시키는 함수로 똑같이 실행시킬때 생략이 가능하다.
