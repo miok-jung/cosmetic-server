@@ -7,9 +7,11 @@
     "cosmetic-server": "www.js"
   },
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "dotenv": "^13.0.1",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1"
   },
   "scripts": {
@@ -18,7 +20,7 @@
     "dev": "nodemon ./bin/www.js"
   },
   "repository": {
-    "type": "git", 
+    "type": "git",
     "url": "git+https://github.com/miok-jung/cosmetic-server.git"
   },
   "keywords": [
