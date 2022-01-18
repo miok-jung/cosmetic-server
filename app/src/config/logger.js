@@ -39,4 +39,8 @@ if (process.env.NODE_ENV !== "production") {
   logger.add(opts.console);
 }
 
+// morgan과 logger를 함께 사용할때
+logger.stream = {
+  write: (message) => logger.info(message),
+};
 module.exports = logger;
