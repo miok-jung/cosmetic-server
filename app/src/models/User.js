@@ -11,10 +11,10 @@ class User {
   async login() {
     const client = this.body;
     try {
-      const { id, password } = await UserStorage.getUserInfo(client.id);
-      if (id) {
+      const user = await UserStorage.getUserInfo(client.id);
+      if (user) {
         // 아이디가 있는지 먼저 확인
-        if (id === client.id && password === client.password) {
+        if (user.id === client.id && user.password === client.password) {
           // UserStorage에 저장된 값과 입력한 아이디/비번이 같은지 확인
           return { success: true };
         }

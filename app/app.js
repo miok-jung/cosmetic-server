@@ -7,8 +7,6 @@ dotenv.config();
 //why use : OS마다 환경변수를 개발할 때 변수 등록이 달라질 수 있다.
 // config를 통해서 자동적으로 root에 .env파일을 실행한다.
 
-const accessLogStream = require("./src/config/log");
-
 // 라우팅
 const home = require("./src/routes/home");
 
