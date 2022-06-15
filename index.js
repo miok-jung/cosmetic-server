@@ -20,6 +20,7 @@ app.use(cookieParser());
 
 // ANCHOR 라우팅
 app.use('/api/users', require('./Router/user'));
+app.use('/api/board', require('./Router/board'));
 
 app.listen(port, () => {
   mongoose

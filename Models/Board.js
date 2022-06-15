@@ -6,6 +6,7 @@ const boardSchema = new mongoose.Schema(
     content: String,
     boardNum: Number,
     image: String,
+    date: { type: Date, default: Date.now() },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
