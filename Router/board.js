@@ -38,12 +38,26 @@ router.post('/submit', (req, res) => {
 });
 
 // ANCHOR READ
-// FIXME 최신순/인기순 가져오기 필요
+// FIXME 인기순 가져오기 필요
 router.get('/list', (req, res) => {
   Board.find()
+    .sort({ date: -1 })
     .exec()
     .then((doc) => {
-      res.status(200).json({ success: true, BoardList: doc });
+      res.status(200).json({ success: true, boardList: doc });
+    })
+    .catch((err) => {
+      res.status(400).json({ success: false, err });
+    });
+});
+
+router.get('/list/recent', (req, res) => {
+  Board.find()
+    .sort({ date: -1 })
+    .limit(4)
+    .exec()
+    .then((doc) => {
+      res.status(200).json({ success: true, boardList: doc });
     })
     .catch((err) => {
       res.status(400).json({ success: false, err });
