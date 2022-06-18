@@ -51,13 +51,25 @@ router.get('/list', (req, res) => {
     });
 });
 
-router.get('/list/recent', (req, res) => {
+// FIXME 증가하면서 받을 데이터를 나누어 받는방법 알아보기
+router.get(`/list/recent`, (req, res) => {
   Board.find()
     .sort({ date: -1 })
     .limit(4)
     .exec()
     .then((doc) => {
       res.status(200).json({ success: true, boardList: doc });
+    })
+    .catch((err) => {
+      res.status(400).json({ success: false, err });
+    });
+});
+
+router.post('/detail', (req, res) => {
+  Board.findOne({ boardNum: Number(req.body.boardNum) })
+    .exec()
+    .then((doc) => {
+      res.status(200).json({ success: true, board: doc });
     })
     .catch((err) => {
       res.status(400).json({ success: false, err });
