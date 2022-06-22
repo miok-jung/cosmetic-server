@@ -12,6 +12,7 @@ router.post('/submit', (req, res) => {
     title: req.body.title,
     content: req.body.content,
     image: req.body.image,
+    date: Date.now(),
   };
   Counter.findOne({ name: 'counter' })
     .exec()
@@ -41,6 +42,7 @@ router.post('/submit', (req, res) => {
 // FIXME 인기순 가져오기 필요
 router.get('/list', (req, res) => {
   Board.find()
+    .populate('author')
     .sort({ date: -1 })
     .exec()
     .then((doc) => {
@@ -54,6 +56,7 @@ router.get('/list', (req, res) => {
 // FIXME 증가하면서 받을 데이터를 나누어 받는방법 알아보기
 router.get(`/list/recent`, (req, res) => {
   Board.find()
+    .populate('author')
     .sort({ date: -1 })
     .limit(4)
     .exec()
@@ -67,6 +70,7 @@ router.get(`/list/recent`, (req, res) => {
 
 router.post('/detail', (req, res) => {
   Board.findOne({ boardNum: Number(req.body.boardNum) })
+    .populate('author')
     .exec()
     .then((doc) => {
       res.status(200).json({ success: true, board: doc });
