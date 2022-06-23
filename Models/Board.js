@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const boardSchema = new mongoose.Schema(
   {
+    boardNum: Number,
     title: String,
     content: String,
-    boardNum: Number,
     image: String,
     date: Date,
     author: {
@@ -17,8 +17,8 @@ const boardSchema = new mongoose.Schema(
     },
   },
   { collection: 'boards' },
-);
+)
 
-const Board = mongoose.model('Board', boardSchema);
+const Board = mongoose.model('Board', boardSchema)
 
-module.exports = { Board };
+module.exports = { Board }
