@@ -1,10 +1,14 @@
 const express = require('express')
 const router = express.Router()
+const multer = require('multer')
 
 // ANCHOR Models를 불러오기
 const { User } = require('../Models/User')
 const { Board } = require('../Models/Board')
 const { Counter } = require('../Models/Counter')
+const uploadFile = require('../s3')
+
+// const { uploadFile, getFileStream } = require('../s3')
 
 // ANCHOR CREATE
 router.post('/submit', (req, res) => {
@@ -39,10 +43,8 @@ router.post('/submit', (req, res) => {
     })
 })
 
-const multer = require('multer')
+// FIXME multerS3로 변경해서 관리하기 쉽게 할 것.
 const upload = multer({ dest: 'uploads/' })
-
-const { uploadFile, getFileStream } = require('../s3')
 
 router.get('/images/:key', (req, res) => {
   console.log(req.params)
@@ -52,14 +54,16 @@ router.get('/images/:key', (req, res) => {
   readStream.pipe(res)
 })
 
-router.post('/image/upload', upload.single('image'), async (req, res) => {
-  const file = req.file
-  console.log(file)
-  const result = await uploadFile(file)
-  console.log(result)
-  res.send({ location: `/images/${result.Key}` })
+// router.post('/image/upload', upload.single('image'), async (req, res) => {
+//   const file = req.file
+//   console.log(file)
+//   const result = await uploadFile(file)
+//   console.log(result)
+//   res.send({ location: `/images/${result.Key}` })
+// })
+router.post('/image/upload', uploadFile, (req, res) => {
+  res.status(200).json({ success: true, imageURL: req.file.key })
 })
-
 // ANCHOR READ
 // FIXME 인기순 가져오기 필요
 router.get('/list', (req, res) => {
