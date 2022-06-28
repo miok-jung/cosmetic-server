@@ -33,7 +33,7 @@ const s3 = new AWS.S3({
 const uploadFile = multer({
   storage: multerS3({
     s3: s3,
-    bucket: bucketName,
+    bucket: bucketName + '/boards',
     acl: 'public-read-write',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
@@ -41,6 +41,7 @@ const uploadFile = multer({
       cb(null, `${Date.now()}_${file.originalname}`)
     },
   }),
+  limits: { fileSize: 5 * 1024 * 1024 },
 }).single('image')
 module.exports = uploadFile
 // downloads a file from s3
