@@ -1,4 +1,3 @@
-const fs = require('fs')
 const AWS = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
@@ -41,7 +40,7 @@ const uploadFile = multer({
       cb(null, `${Date.now()}_${file.originalname}`)
     },
   }),
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 1000 * 1000 * 10 }, // 약 10메가바이트
 }).single('image')
 module.exports = uploadFile
 // downloads a file from s3
