@@ -23,10 +23,10 @@ router.post('/submit', (req, res) => {
     .exec()
     .then((counter) => {
       temp.boardNum = counter.boardNum
-      User.findOne({ uid: req.body.uid })
+      User.findOne({ uid: req.body.uid.userData._id })
         .exec()
         .then((userInfo) => {
-          temp.author = userInfo._id
+          temp.author = req.body.uid.userData._id
           const CommunityPost = new Board(temp)
           CommunityPost.save().then(() => {
             Counter.updateOne(
