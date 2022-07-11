@@ -36,7 +36,7 @@ const uploadFile = multer({
     acl: 'public-read-write',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
-      console.log('req:', file.originalname)
+      console.log(file)
       cb(null, `${Date.now()}_${file.originalname}`)
     },
   }),
