@@ -107,7 +107,20 @@ router.post('/detail', (req, res) => {
 })
 
 // ANCHOR UPDATE
-
+router.post('/edit', (req, res) => {
+  let temp = {
+    title: req.body.title,
+    content: req.body.content,
+  }
+  Board.updateOne({ boardNum: Number(req.body.boardNum) }, { $set: temp })
+    .exec()
+    .then(() => {
+      res.status(200).json({ success: true })
+    })
+    .catch((err) => {
+      res.status(400).json({ success: false, err })
+    })
+})
 // ANCHOR DELETE
 
 module.exports = router
